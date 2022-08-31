@@ -1,5 +1,7 @@
 #Mannual commands if not running ansible
 
+https://cloud-images.ubuntu.com/releases/22.04/release/ubuntu-22.04-server-cloudimg-amd64.img
+
 qm create 101 --name ubuntu-22.04-server-cloudimg-amd64-300822 --memory 4096 --net0 virtio,bridge=vmbr0
 qm importdisk 101 ubuntu-22.04-server-cloudimg-amd64.qcow2 local-lvm
 qm set 101 --scsihw virtio-scsi-pci --scsi0 local-lvm:vm-101-disk-0

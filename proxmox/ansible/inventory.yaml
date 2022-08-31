@@ -2,5 +2,19 @@ all:
   children:
     pve:
       hosts:
-        proxmox-master:
-          ansible_host: proxmox.local
+        pvemr01:
+          ansible_host: pvemr01.hennings.cc
+          ansible_ssh_private_key_file: ~/.ssh/chennings-ed25519
+          ansible_user: root
+          template_id: 1031
+        pvemr02:
+          ansible_host: pvemr02.hennings.cc
+          ansible_ssh_private_key_file: ~/.ssh/chennings-ed25519
+          ansible_user: root
+          template_id: 1032
+        pvemr03:
+          ansible_host: pvemr03.hennings.cc
+          ansible_ssh_private_key_file: ~/.ssh/chennings-ed25519
+          ansible_user: root
+          template_id: 1033
+
