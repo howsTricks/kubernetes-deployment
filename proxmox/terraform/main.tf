@@ -13,6 +13,9 @@ resource "proxmox_vm_qemu" "nodes" {
   scsihw   = "virtio-scsi-pci"
   bootdisk = "scsi0"
 
+  #startup on boot of host
+  onboot = true
+
   disk {
     size     = each.value.disk_size
     type     = "scsi"
