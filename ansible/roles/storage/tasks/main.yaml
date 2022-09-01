@@ -1,0 +1,35 @@
+- name: install nfs and iscsi packages
+  become: yes
+  apt:
+    pkg:
+      - nfs-common
+      - open-iscsi
+      - lsscsi 
+      - sg3-utils
+      - multipath-tools
+      - scsitools
+    update_cache: yes
+
+- name: enable multipathing
+  become: yes
+  ansible.builtin.blockinfile:
+    path: /etc/multipath.conf
+    block:  |
+      defaults {
+        user_friendly_names yes
+        find_multipaths yes
+      }
+  
+- name: Enable and start service multipath-tools
+  become: yes
+  ansible.builtin.systemd:
+    name: multipath-tools
+    enabled: yes
+    state: restarted
+
+- name: Enable and start open-iscsi
+  become: yes
+  ansible.builtin.systemd:
+    name: open-iscsi
+    enabled: yes
+    state: restarted
