@@ -4,3 +4,5 @@ admin.conf
 *.pem
 *.csr
 csr.json
+*.tfstate
+*.tfstate.backup
