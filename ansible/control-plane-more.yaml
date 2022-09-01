@@ -1,0 +1,16 @@
+---
+  - hosts: control-plane
+    name: "Retrieve join token, certificate hash and cert key"
+    roles:
+      - name: retrieve kubeadm join config for control
+        role: kubeadm-join-config-control
+
+  - hosts: control-plane-more
+    vars:
+      token: "{{ lookup('file', local.token_file) }}"
+      cert_hash: "{{ lookup('file', local.cert_hash_file) }}"
+      cert_key: "{{ lookup('file', local.cert_key_file) }}"
+    name: "Join Kubernetes control plane more nodes"
+    roles:
+      - name: run kubeadm join
+        role: kubeadm-join-control

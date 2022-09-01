@@ -5,6 +5,12 @@
       - name: run kubeadm reset
         role: kubeadm-reset
 
+  - hosts: control-plane-more
+    name: "Resetting control plane more nodes"
+    roles:
+      - name: run kubeadm reset
+        role: kubeadm-reset
+
   - hosts: control-plane
     name: "Resetting control plane nodes"
     roles:

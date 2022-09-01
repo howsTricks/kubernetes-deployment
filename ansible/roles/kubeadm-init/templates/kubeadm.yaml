@@ -21,6 +21,7 @@ networking:
   dnsDomain: "{{ networking.domain }}"
   podSubnet: "{{ networking.pod_subnet }}"
   serviceSubnet: "{{ networking.service_subnet }}"
+controlPlaneEndpoint: "{{ networking.controlPlaneEndpoint }}"
 ---
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: InitConfiguration

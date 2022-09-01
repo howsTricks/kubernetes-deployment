@@ -6,4 +6,4 @@
 
 - name: running kubeadm join
   become: yes
-  command: kubeadm join --config /etc/kubeadm-join.yaml
+  command: kubeadm join {{ networking.controlPlaneEndpoint }} --node-name {{ inventory_hostname }} --token {{ token }}  --discovery-token-ca-cert-hash {{ cert_hash }}

@@ -1,9 +1,15 @@
-- name: copy Calico manifests
+- name: install Tigera Calico operator
+  become: yes
+  command: kubectl --kubeconfig=/etc/kubernetes/admin.conf create -f https://raw.githubusercontent.com/projectcalico/calico/v3.24.1/manifests/tigera-operator.yaml
+
+
+- name: copy custom-resources config
   become: yes
   template:
-    src: calico.yaml
-    dest: /etc/calico.yaml
+    src: custom-resources.yaml
+    dest: /etc/custom-resources.yaml
 
 - name: install Calico
   become: yes
-  command: kubectl apply -f /etc/calico.yaml --kubeconfig=/etc/kubernetes/admin.conf
+  command: kubectl --kubeconfig=/etc/kubernetes/admin.conf create -f /etc/custom-resources.yaml
+

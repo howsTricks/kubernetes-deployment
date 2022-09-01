@@ -1,0 +1,12 @@
+
+Calico not starting up, was related to pod IP not matching calico expected pod IPs (192.168.0.0/16 for some reason)
+Found here https://github.com/projectcalico/calico/issues/4218
+
+kubectl get pods -n tigera-operator
+kubectl get tigerastatus -o yaml
+kubectl logs -n tigera-operator -l k8s-app=tigera-operator
+
+
+rejoin a node
+https://www.reddit.com/r/kubernetes/comments/u6znpv/question_how_can_i_upgrade_a_worker_node_to_a/
+https://stackoverflow.com/questions/46006716/how-to-change-name-of-a-kubernetes-node

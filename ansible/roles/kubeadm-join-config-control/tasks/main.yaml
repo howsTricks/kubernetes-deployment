@@ -1,0 +1,56 @@
+- name: create local dir for token and cert hash
+  file:
+    path: "{{ local.artifact_dir }}"
+    state: directory
+  delegate_to: localhost
+  run_once: True
+
+- name: kubeadm token generate
+  become: yes
+  command: kubeadm token list --kubeconfig=/etc/kubernetes/admin.conf -o jsonpath="{ .token }"
+  run_once: True
+  register: token
+
+- name: generate cert hash
+  become: yes
+  shell: "openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* /sha256:/'"
+  run_once: True
+  register: cert_hash
+
+- name: create new cert key for joining control nodes"
+  become: yes
+  shell: kubeadm init phase upload-certs --upload-certs
+  register: cert_key
+
+- debug:
+    var: cert_key.stdout
+
+- name: find the key in the stdout
+  set_fact:
+    cert_key_found: "{{ cert_key.stdout | regex_search(pattern) }}"
+  vars:
+    pattern: '(?<=\n)(\w{30,100})'
+
+- debug:
+    var: cert_key_found
+
+
+- name: persist token locally
+  copy:
+    dest: "{{ local.token_file }}"
+    content: "{{ token.stdout }}"
+  delegate_to: localhost
+  run_once: True
+
+- name: persist cert hash locally
+  copy:
+    dest: "{{ local.cert_hash_file }}"
+    content: "{{ cert_hash.stdout }}"
+  delegate_to: localhost
+  run_once: True
+
+- name: persist cert key locally
+  copy:
+    dest: "{{ local.cert_key_file }}"
+    content: "{{ cert_key_found }}"
+  delegate_to: localhost

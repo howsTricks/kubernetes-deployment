@@ -1,0 +1,3 @@
+- name: running kubeadm join for control plane nodes
+  become: yes
+  command: kubeadm join {{ networking.controlPlaneEndpoint }} --node-name {{ inventory_hostname }} --token {{ token }}  --discovery-token-ca-cert-hash {{ cert_hash }} --control-plane --certificate-key {{ cert_key }}
