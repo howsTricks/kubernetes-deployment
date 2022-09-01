@@ -4,7 +4,7 @@ kubernetes:
   apt_version: 1.23.9-00
 
 networking:
-  domain: hennings.cc
+  domain: cluster.local
   pod_subnet: 192.168.64.0/20
   service_subnet: 10.96.0.0/12
   controlPlaneEndpoint: k8sapi.hennings.cc:6443
