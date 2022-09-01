@@ -1,0 +1,10 @@
+- name: set timezone
+  community.general.timezone:
+    name: "{{ time.timezone }}"
+  become: yes
+
+- name: restart cron
+  systemd:
+    name: cron
+    state: restarted
+  become: yes

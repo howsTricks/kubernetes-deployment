@@ -2,6 +2,9 @@
 - hosts: all
   name: "Bootstrapping hosts"
   roles:
+    - name: set timezone
+      role: timezone
+
     - name: reboot all nodes
       role: reboot
       
@@ -13,5 +16,3 @@
 
     - name: downloading Kubernetes dependencies
       role: kubernetes-packages
-
-
